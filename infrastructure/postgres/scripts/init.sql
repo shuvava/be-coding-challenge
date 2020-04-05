@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS dbo.relations
 				on delete cascade
 );
 
+alter role family set search_path = "dbo", public;
 INSERT INTO dbo.relation_types ("id", "name")
 VALUES (1, 'parent'),
 (2, 'child')

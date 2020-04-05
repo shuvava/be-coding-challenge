@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 import logging.config
+
 from flask import Flask, Blueprint
 from flask_cors import CORS
 
 from family_tree.api import (
     api,
-    app_version_ns
+    app_version_ns, persons_ns
 )
-from family_tree.database import db
 from family_tree.config import init_config
-
+from family_tree.database import db
 
 log = logging.getLogger(__name__)
 
@@ -26,6 +26,8 @@ def initialize_app(app: Flask) -> None:
 
     app_version_ns.db = db
     api.add_namespace(app_version_ns)
+    persons_ns.db = db
+    api.add_namespace(persons_ns)
 
 
 def create_app() -> Flask:

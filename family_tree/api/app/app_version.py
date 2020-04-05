@@ -4,17 +4,14 @@ import sys
 
 from flask import (
     current_app,
-    blueprints,
     jsonify,
-    )
+)
 from flask_restplus import Resource
 from sqlalchemy import text
-from werkzeug.exceptions import HTTPException
 
 from ..restplus import api
 
 log = logging.getLogger(__name__)
-blueprint = blueprints.Blueprint('family', __name__)
 ns = api.namespace('app', description='Application Information')
 
 
@@ -39,5 +36,5 @@ class AppRediness(Resource):
             db.execute(text("SELECT 1"))
         except:
             log.error("Unexpected error:", sys.exc_info()[0])
-            raise HTTPException(status_code=503, detail='db connection error')
+            return 'db connection error', 503
         return 'OK'
