@@ -1,14 +1,38 @@
-from flask import Flask
-import flask_cors
+# -*- coding: utf-8 -*-
+import logging.config
+from flask import Flask, Blueprint
+from flask_cors import CORS
 
-from family_tree.views import health_check
+from family_tree.api import (
+    api,
+    app_version_ns
+)
+from family_tree.database import db
+from family_tree.config import init_config
 
-cors = flask_cors.CORS()
+
+log = logging.getLogger(__name__)
 
 
-def create_app():
+def configure_app(app: Flask) -> None:
+    init_config(app.config)
+    CORS(app)
+
+
+def initialize_app(app: Flask) -> None:
+    blueprint = Blueprint('api', __name__, url_prefix='/api')
+    db.init_app(app)
+    api.init_app(app)
+
+    app_version_ns.db = db
+    api.add_namespace(app_version_ns)
+
+
+def create_app() -> Flask:
     app = Flask(__name__)
-    cors.init_app(app)
-    app.register_blueprint(health_check.blueprint, url_prefix='/api')
+
+    configure_app(app)
+    initialize_app(app)
+    log.info('>>>>>> application started <<<<<<<')
 
     return app

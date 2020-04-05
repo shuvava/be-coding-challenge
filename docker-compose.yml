@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  postgresql:
+    image: postgres:11.4-alpine
+    container_name: psql
+    ports:
+       - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=P@ssw0rd
+      - POSTGRES_DB=family
+      - POSTGRES_USER=family
+    volumes:
+      - ./infrastructure/postgres/scripts:/docker-entrypoint-initdb.d

@@ -3,11 +3,19 @@ url = "https://pypi.org/simple"
 name = "pypi"
 verify_ssl = true
 
+[dev-packages]
+pylint = "*"
+autopep8 = "*"
+
 [requires]
-python_version = "3.6"
+python_version = "3.8"
 
 [packages]
 flask = "*"
 pytest = "*"
 flask-cors = "*"
 python-dotenv = "*"
+flask-restplus = "*"
+flask-sqlalchemy = "*"
+werkzeug = "==0.16.0"
+psycopg2-binary = "*"
