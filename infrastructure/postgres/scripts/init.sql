@@ -28,6 +28,10 @@ CREATE TABLE IF NOT EXISTS dbo.relations
 				on delete cascade
 );
 
+create index relations_parent_id_index
+	on dbo.relations (parent_id);
+ALTER TABLE dbo.relations CLUSTER ON relations_parent_id_index;
+
 alter role family set search_path = "dbo", public;
 INSERT INTO dbo.relation_types ("id", "name")
 VALUES (1, 'parent'),

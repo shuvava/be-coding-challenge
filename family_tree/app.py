@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging.config
 
-from flask import Flask, Blueprint
+from flask import Flask
 from flask_cors import CORS
 
 from family_tree.api import (
@@ -20,7 +20,6 @@ def configure_app(app: Flask) -> None:
 
 
 def initialize_app(app: Flask) -> None:
-    blueprint = Blueprint('api', __name__, url_prefix='/api')
     db.init_app(app)
     api.init_app(app)
 
